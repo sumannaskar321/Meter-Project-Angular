@@ -19,6 +19,7 @@ export class GlobalDashboardComponent implements OnInit, AfterViewInit {
   public showSpinner: boolean;
   public meterList: Observable<any>;
   public today: Date;
+  private chart: am4charts.XYChart;
   public mappingData: { datetime: Date; unitvalue?: string; unit?: string }[] =
     [];
 
@@ -87,13 +88,13 @@ export class GlobalDashboardComponent implements OnInit, AfterViewInit {
 
 
   public plot(meter: any,data:any) {
-    let chart = am4core.create(meter._id, am4charts.XYChart);
+    this.chart = am4core.create(meter._id, am4charts.XYChart);
 
     // Add data
 console.log(data);
-    chart.data = data; 
+    this.chart.data = data; 
     // Create axes
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    let dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
 
     // Set date label formatting
     dateAxis.baseInterval = {
@@ -104,10 +105,10 @@ console.log(data);
     dateAxis.periodChangeDateFormats.setKey('hour', 'HH');
     dateAxis.renderer.minGridDistance = 30;
 
-    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
 
     // Create series
-    let series = chart.series.push(new am4charts.ColumnSeries());
+    let series = this.chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = 'unitvalue'; //'unitvalue';
     // series.dataFields.categoryX = 'datetime';
     series.dataFields.dateX = 'datetime'; //'datetime';
@@ -172,9 +173,11 @@ console.log(data);
     return todayDateSlice === dateSlice;
   }
   public onClickBack() {
+    am4core.disposeAllCharts();
     this.router.navigate(['/meters', 'list']);
   }
-  onClickGridTile(id: string) {
+  public onClickGridTile(id: string) {
+    am4core.disposeAllCharts();
     this.router.navigate(['/meters', 'data', 'dashboard', id]);
   }
 }
