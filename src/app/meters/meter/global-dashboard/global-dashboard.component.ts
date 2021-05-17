@@ -19,19 +19,11 @@ export class GlobalDashboardComponent implements OnInit, AfterViewInit {
   public showSpinner: boolean;
   public meterList: Observable<any>;
   public today: Date;
-  public multichart: string[];
   public mappingData: { datetime: Date; unitvalue?: string; unit?: string }[] =
     [];
-  public listMappingData: {
-    datetime: Date;
-    unitvalue?: string;
-    unit?: string;
-  }[][] = [];
-  public count: number;
 
   constructor(private router: Router, private mService: MeterService) {
     this.today = new Date();
-    this.multichart = [];
   }
 
   ngOnInit(): void {
@@ -48,45 +40,58 @@ export class GlobalDashboardComponent implements OnInit, AfterViewInit {
     //   });
   }
 
-
   public loadMeterList() {
     this.mService.getMeterList().subscribe((res) => {
       this.meterList = res;
-      this.count = 0;
       this.meterList.forEach((meter) => {
         // this.pushData(meter.data as MeterDataModel[]);
-         setTimeout(() => {
-        this.plot(meter);
-      },2000);
-        // this.createDivId(this.count);
+        this.mappingData = [];
+        let temp: { datetime: Date; unitvalue: string; unit: string }[] = [];
+        // Filter Data
+        let datalist = meter.data as MeterDataModel[];
+        let DataList = datalist.filter(
+          (info) => info.unit === 'Kwh' && this.dateMatch(info.datetime)
+        );
+        // console.log(DataList);
+
+        // Assigning Data for table
+        DataList.forEach((value) => {
+          temp.push({
+            datetime: new Date(value.datetime),
+            unitvalue: value.unitvalue,
+            unit: value.unit,
+          });
+        });
+
+        // Assigning data for chart
+        this.setMappingData();
+        for (let l = 0; l < this.mappingData.length; l++) {
+          let mappingHour = this.mappingData[l].datetime.getHours();
+          for (let loop = 0; loop < temp.length; loop++) {
+            let dataHour = temp[loop].datetime.getHours();
+            if (mappingHour === dataHour) {
+              this.mappingData[l].unitvalue = temp[loop].unitvalue;
+            }
+          }
+        }
+        let mapdata=this.mappingData;
+        //Calling map
+        setTimeout(() => {
+          this.plot(meter,mapdata);
+        }, 50);
+
       });
 
-      console.log(this.listMappingData);
-      //Calling map
-      // for (let i = 0; i < this.listMappingData.length; i++) {
-      //   setTimeout(() => {
-      //     console.log(i)
-      //     this.plot(i);
-      //   }, 2000);
-      //   // this.showSpinner = false;
-      // }
     });
   }
 
-  public createDivId(index: number) {
-    let divid = `chartdiv${index}`;
-    this.multichart.push(divid);
-    this.count += 1;
-  }
 
-  public plot(meter: any) {
-
+  public plot(meter: any,data:any) {
     let chart = am4core.create(meter._id, am4charts.XYChart);
 
     // Add data
-    // console.log(this.listMappingData[index]);
-    console.log(meter.data);
-    chart.data =meter.data as MeterDataModel[] //this.listMappingData[index];
+console.log(data);
+    chart.data = data; 
     // Create axes
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 
@@ -114,45 +119,42 @@ export class GlobalDashboardComponent implements OnInit, AfterViewInit {
     let columnTemplate = series.columns.template;
     columnTemplate.strokeWidth = 2;
     columnTemplate.strokeOpacity = 1;
-    // Create scrollbars
-    // this.chart.scrollbarX = new am4core.Scrollbar();
-    // this.chart.scrollbarY = new am4core.Scrollbar();
     this.showSpinner = false;
   }
 
-  public pushData(datalist: MeterDataModel[]) {
-    // console.log(this.mappingData);
-    let temp: { datetime: Date; unitvalue: string; unit: string }[] = [];
-    // Filter Data
-    let DataList = datalist.filter(
-      (info) => info.unit === 'Kwh' && this.dateMatch(info.datetime)
-    );
-    // console.log(DataList);
+  // public pushData(datalist: MeterDataModel[]) {
+  //   // console.log(this.mappingData);
+  //   let temp: { datetime: Date; unitvalue: string; unit: string }[] = [];
+  //   // Filter Data
+  //   let DataList = datalist.filter(
+  //     (info) => info.unit === 'Kwh' && this.dateMatch(info.datetime)
+  //   );
+  //   // console.log(DataList);
 
-    // Assigning Data for table
-    DataList.forEach((value) => {
-      temp.push({
-        datetime: new Date(value.datetime),
-        unitvalue: value.unitvalue,
-        unit: value.unit,
-      });
-    });
+  //   // Assigning Data for table
+  //   DataList.forEach((value) => {
+  //     temp.push({
+  //       datetime: new Date(value.datetime),
+  //       unitvalue: value.unitvalue,
+  //       unit: value.unit,
+  //     });
+  //   });
 
-    // Assigning data for chart
-    this.setMappingData();
-    for (let l = 0; l < this.mappingData.length; l++) {
-      let mappingHour = this.mappingData[l].datetime.getHours();
-      for (let loop = 0; loop < temp.length; loop++) {
-        let dataHour = temp[loop].datetime.getHours();
-        if (mappingHour === dataHour) {
-          this.mappingData[l].unitvalue = temp[loop].unitvalue;
-        }
-      }
-    }
-    // console.log(this.mappingData);
-    this.listMappingData.push(this.mappingData);
-    // this.plot(0);
-  }
+  //   // Assigning data for chart
+  //   this.setMappingData();
+  //   for (let l = 0; l < this.mappingData.length; l++) {
+  //     let mappingHour = this.mappingData[l].datetime.getHours();
+  //     for (let loop = 0; loop < temp.length; loop++) {
+  //       let dataHour = temp[loop].datetime.getHours();
+  //       if (mappingHour === dataHour) {
+  //         this.mappingData[l].unitvalue = temp[loop].unitvalue;
+  //       }
+  //     }
+  //   }
+  //   // console.log(this.mappingData);
+  //   this.listMappingData.push(this.mappingData);
+  //   // this.plot(0);
+  // }
 
   public setMappingData() {
     this.mappingData = [];
@@ -172,7 +174,7 @@ export class GlobalDashboardComponent implements OnInit, AfterViewInit {
   public onClickBack() {
     this.router.navigate(['/meters', 'list']);
   }
-  onClickGridTile(id:string){
-    this.router.navigate(['/meters','data','dashboard',id]);
+  onClickGridTile(id: string) {
+    this.router.navigate(['/meters', 'data', 'dashboard', id]);
   }
 }
