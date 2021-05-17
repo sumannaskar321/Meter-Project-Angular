@@ -1,0 +1,22 @@
+<mat-progress-spinner
+  class="example-margin"
+  mode="indeterminate"
+  *ngIf="showSpinner"
+>
+</mat-progress-spinner>
+<div>
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <button type="button" class="btn btn-info btn-md" (click)="onClickBack()">
+      Back
+    </button>
+
+    <h2 style="text-align: center">{{ today }}</h2>
+    <hr />
+    <mat-grid-tile *ngFor="let meter of meterList; let i = index" (click)="onClickGridTile(meter._id)">
+      <mat-grid-tile-header>
+        <h4>{{ meter.id }}</h4>
+      </mat-grid-tile-header>
+      <div [id]="meter._id" style="width: 100%; height: 95%"></div
+    ></mat-grid-tile>
+  </mat-grid-list>
+</div>

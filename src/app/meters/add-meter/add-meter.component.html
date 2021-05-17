@@ -1,0 +1,41 @@
+<div class="container">
+    <form [formGroup]="meterForm" (ngSubmit)="onSubmit()">
+        <div class="row form-group">
+            <label for="id" class="col-sm-1 col-form-label">Id</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="id" placeholder="Id" formControlName="id" />
+                <span class="help-block"
+                    *ngIf="meterForm.get('id')?.errors?.required && meterForm.get('id')?.touched">Please
+                    enter Id!</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-sm-1 col-form-label">Name</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="name" placeholder="Name" formControlName="name" />
+                <span class="help-block"
+                    *ngIf="meterForm.get('name')?.errors?.required && meterForm.get('name')?.touched">Please
+                    enter name!</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="location" class="col-sm-1 col-form-label">Location</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="location" placeholder="Location"
+                    formControlName="location" />
+                <span class="help-block"
+                    *ngIf="meterForm.get('location')?.errors?.required && meterForm.get('location')?.touched">Please
+                    enter Location!</span>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-success btn-md" [disabled]="!meterForm.valid">Submit</button>
+                <button type="button" class="btn btn-danger btn-md" (click)="onClickCancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>

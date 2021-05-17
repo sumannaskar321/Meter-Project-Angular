@@ -1,0 +1,55 @@
+
+<mat-progress-spinner class="example-margin" mode="indeterminate" *ngIf="showSpinner">
+</mat-progress-spinner>
+<div *ngIf="!showSpinner">
+    <div class="row">
+        <button type="button" class="btn btn-primary btn-md" (click)="onClickAddMeter()">
+            Add Meter
+        </button>
+        <button type="button" class="btn btn-info btn-md" (click)="onClickGlobalDashboard()">
+            Global Dashboard
+        </button>
+    </div>
+    <hr>
+    <div class="row">
+    <h2>Meter List</h2>
+    <div class="col-xs-12">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Sl No.</th>
+                    <!-- <th scope="col">Id</th> -->
+                    <th scope="col">Meter Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let m of mService.minfos; let i = index" >
+                    <!--usersInfo -->
+                    <th scope="row">{{ i + 1 }}</th>
+                    <!-- <td> {{m._id}} </td> -->
+                    <td> {{m.id}} </td>
+                    <td> {{m.name}} </td>
+                    <td> {{m.location}} </td>
+                    <td>
+                        <div class="button-group">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="onClickEdit(m._id)">
+                            Edit
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" (click)="onClickAddData(m._id)">
+                            Add Data
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="onClickDashboard(m._id)">
+                            Dashboard
+                        </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

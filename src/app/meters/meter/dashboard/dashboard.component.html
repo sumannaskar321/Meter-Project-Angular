@@ -1,0 +1,90 @@
+<mat-progress-spinner class="example-margin" mode="indeterminate" *ngIf="showSpinner">
+</mat-progress-spinner>
+<div>
+  <div class="row">
+    <button type="button" class="btn btn-info btn-md" (click)="onClickBack()">
+      Back
+    </button>
+
+    <fieldset class="form-group">
+      <div class="row">
+        <!-- <legend class="col-form-label col-sm-2 pt-0"></legend> -->
+        <div class="col-sm-10">
+          <div class="form-check" *ngFor="let option of radiooptions">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="opt"
+                [value]="option"
+                [(ngModel)]="radiooption"
+                (change)="onClickRadio()"
+              />
+              {{ option }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <hr />
+  <div class="form-group row">
+    <label for="unit" class="col-sm-1 col-form-label">Unit</label>
+    <div class="col-sm-4">
+      <select
+        class="form-control"
+        id="unit"
+        name="unit"
+        [(ngModel)]="dropDownValue"
+        (change)="onChange()"
+      >
+        <!-- <option selected value="-1">Select Unit...</option> -->
+        <option [value]="unit" *ngFor="let unit of units">{{ unit }}</option>
+      </select>
+    </div>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [max]="maxDate"
+        [(ngModel)]="datePicker"
+        (dateInput)="onChange()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <div id="chartdiv" style="width: 100%; height: 500px" #chartElement></div>
+  </div>
+
+  <hr />
+  <div>
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+      class="row-border hover"
+    >
+      <thead>
+        <tr>
+          <th>Sl No</th>
+          <th>Date</th>
+          <th>Unit</th>
+          <th>Unit Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mapdata of data; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ mapdata.datetime }}</td>
+          <td>{{ mapdata.unit }}</td>
+          <td>{{ mapdata.unitvalue }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
