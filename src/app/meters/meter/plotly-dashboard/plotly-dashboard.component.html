@@ -1,0 +1,17 @@
+<div class="row">
+  <mat-progress-spinner
+    class="example-margin"
+    mode="indeterminate"
+    *ngIf="showSpinner"
+  ></mat-progress-spinner>
+  <button type="button" class="btn btn-info btn-md" (click)="onClickBack()">
+    Back
+  </button>
+  <hr />
+  <plotly-plot
+    [data]="graph.data"
+    [layout]="graph.layout"
+    [style]="{ position: 'relative', width: '100%', height: '100%' }"
+  >
+  </plotly-plot>
+</div>

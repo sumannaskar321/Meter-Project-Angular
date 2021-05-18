@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DataTablesModule } from 'angular-datatables';
 import { GlobalDashboardComponent } from './meters/meter/global-dashboard/global-dashboard.component';
+import { PlotlyDashboardComponent } from './meters/meter/plotly-dashboard/plotly-dashboard.component';
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+import { GlobalPlotlyDashboardComponent } from './meters/meter/global-plotly-dashboard/global-plotly-dashboard.component';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -33,9 +40,11 @@ import { GlobalDashboardComponent } from './meters/meter/global-dashboard/global
     AddDataComponent,
     DashboardComponent,
     GlobalDashboardComponent,
+    PlotlyDashboardComponent,
+    GlobalPlotlyDashboardComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
@@ -47,7 +56,7 @@ import { GlobalDashboardComponent } from './meters/meter/global-dashboard/global
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    DataTablesModule,
+    DataTablesModule,PlotlyModule
   ],
   exports: [],
   providers: [],

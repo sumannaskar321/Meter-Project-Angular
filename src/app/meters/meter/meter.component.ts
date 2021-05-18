@@ -43,7 +43,13 @@ export class MeterComponent implements OnInit {
   public onClickDashboard(id:string){
     this.router.navigate(['/meters','data','dashboard',id]);
   }
+  public onClickPlotlyDashboard(id:string){
+    this.router.navigate(['/meters','data','plotly-dashboard',id]);
+  }
   public onClickGlobalDashboard(){
     this.router.navigate(['/meters','data','dashboard']);
+  }
+  public onClickGlobalPlotlyDashboard(){
+    this.router.navigate(['/meters','data','plotly-dashboard']);
   }
 }
