@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddDataComponent } from './add-data/add-data.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DataComponent } from './data/data.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 import { GlobalDashboardComponent } from './global-dashboard/global-dashboard.component';
 import { GlobalPlotlyDashboardComponent } from './global-plotly-dashboard/global-plotly-dashboard.component';
 import { PlotlyDashboardComponent } from './plotly-dashboard/plotly-dashboard.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'plotly-dashboard',component:GlobalPlotlyDashboardComponent},
   { path:'dashboard/:id',component:DashboardComponent},
   { path:'plotly-dashboard/:id',component:PlotlyDashboardComponent},
+  { path: 'file-upload',component:FileUploadComponent},
   { path: '', pathMatch:'full',redirectTo:'list/:id'}
 ];
 

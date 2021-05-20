@@ -44,6 +44,10 @@ export class MeterService{
     return this.http.put(environment.baseUrl+`data/edit/${dataid}`,this.selectedMeterData);
   }
 
+  public uploadFile(data:FormData){
+    return this.http.post<any>(environment.baseUrl+'upload',data);
+  }
+
 
 
 }

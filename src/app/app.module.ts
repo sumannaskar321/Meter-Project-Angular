@@ -26,6 +26,7 @@ import { PlotlyDashboardComponent } from './meters/meter/plotly-dashboard/plotly
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { GlobalPlotlyDashboardComponent } from './meters/meter/global-plotly-dashboard/global-plotly-dashboard.component';
+import { FileUploadComponent } from './meters/meter/file-upload/file-upload.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -42,6 +43,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     GlobalDashboardComponent,
     PlotlyDashboardComponent,
     GlobalPlotlyDashboardComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,CommonModule,

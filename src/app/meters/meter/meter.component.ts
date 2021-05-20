@@ -52,4 +52,7 @@ export class MeterComponent implements OnInit {
   public onClickGlobalPlotlyDashboard(){
     this.router.navigate(['/meters','data','plotly-dashboard']);
   }
+  public onClickFileUpload(){
+    this.router.navigate(['/meters','data','file-upload']);
+  }
 }
