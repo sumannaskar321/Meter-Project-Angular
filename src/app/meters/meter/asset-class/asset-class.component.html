@@ -1,0 +1,110 @@
+<div class="row">
+  <br />
+  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+      <label for="companyIdRdb" class="col-sm-1 col-form-label"
+        >companyIdRdb</label
+      >
+      <div class="col-sm-4">
+        <input
+          type="text"
+          class="form-control"
+          id="companyIdRdb"
+          placeholder="Enter value"
+          formControlName="companyIdRdb"
+        />
+        <span
+          class="help-block"
+          *ngIf="
+            uploadForm.get('companyIdRdb')?.errors?.required &&
+            uploadForm.get('companyIdRdb')?.touched
+          "
+          >Please enter Company Id Rdb</span
+        >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="facilityIdRdb" class="col-sm-1 col-form-label"
+        >facilityIdRdb</label
+      >
+      <div class="col-sm-4">
+        <input
+          type="text"
+          class="form-control"
+          id="facilityIdRdb"
+          placeholder="Enter value"
+          formControlName="facilityIdRdb"
+        />
+        <span
+          class="help-block"
+          *ngIf="
+            uploadForm.get('facilityIdRdb')?.errors?.required &&
+            uploadForm.get('facilityIdRdb')?.touched
+          "
+          >Please enter Facility Id Rdb</span
+        >
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="assetClass" class="col-sm-1 col-form-label">Asset Class</label>
+      <div class="col-sm-4">
+        <select class="form-control" id="assetClass" formControlName="assetClass">
+          <!-- <option selected value="-1">Select Unit...</option> -->
+          <option value="AHU" selected>Ahu</option>
+          <option value="BOILER">Boiler</option>
+          <option value="CHILLER">Chiller</option>
+          <option value="FCU">Fcu</option>
+        </select>
+        <span
+          class="help-block"
+          *ngIf="
+            uploadForm.get('asset_class')?.errors?.required &&
+            uploadForm.get('asset_class')?.touched
+          "
+          >Please Select an option !</span
+        >
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <input
+          type="file"
+          class="form-control"
+          formControlName="csvFile"
+          (change)="onSelectFile($event)"
+        />
+        <span
+          class="help-block"
+          *ngIf="
+            uploadForm.get('csvFile')?.errors?.required &&
+            uploadForm.get('csvFile')?.touched
+          "
+          >Please select a file!</span
+        >
+        <span
+          class="help-block"
+          *ngIf="
+            !(file?.type === 'application/vnd.ms-excel') &&
+            uploadForm.get('csvFile')?.touched
+          "
+          >Please select a .csv file!</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="
+          !uploadForm.valid && !(file?.type === 'application/vnd.ms-excel')
+        "
+      >
+        Upload
+      </button>
+      <button type="button" class="btn btn-danger" (click)="onClickCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

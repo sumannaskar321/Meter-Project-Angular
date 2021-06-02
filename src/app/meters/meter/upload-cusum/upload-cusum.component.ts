@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MeterService } from 'src/app/share/meter.service';
 
 @Component({
-  selector: 'app-file-upload',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.css'],
+  selector: 'app-upload-cusum',
+  templateUrl: './upload-cusum.component.html',
+  styleUrls: ['./upload-cusum.component.css']
 })
-export class FileUploadComponent implements OnInit {
+export class UploadCusumComponent implements OnInit {
+
   public uploadForm: FormGroup;
   public file;
   public header = [];
@@ -50,7 +51,7 @@ export class FileUploadComponent implements OnInit {
   public onSubmit() {
     const formData = new FormData();
     formData.append('_file', this.file);
-    this.meterService.uploadFile(formData).subscribe(
+    this.meterService.uploadCusum(formData).subscribe(
       (res) => {
         console.log(res);
       },
@@ -60,9 +61,10 @@ export class FileUploadComponent implements OnInit {
     );
     // console.log(this.file);
   }
-  
 
   public onClickCancel() {
     this.router.navigate(['/meters', 'list']);
   }
+
+  // {message: "datas updated succesfully", status: "success"}
 }

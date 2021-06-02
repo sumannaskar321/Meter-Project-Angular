@@ -1,5 +1,6 @@
 <div class="row">
-  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+  <br/>
+  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group">
       <input
         type="file"
@@ -17,8 +18,11 @@
       >
       <span
         class="help-block"
-        *ngIf="!(file?.type === 'application/vnd.ms-excel' || file?.type ==='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') &&
-        uploadForm.get('csvFile')?.touched"
+        *ngIf="
+          !(
+            file?.type === 'application/vnd.ms-excel'
+          ) && uploadForm.get('csvFile')?.touched
+        "
         >Please select a .csv file!</span
       >
     </div>
@@ -27,7 +31,9 @@
       <button
         type="submit"
         class="btn btn-success"
-        [disabled]="!uploadForm.valid && !(file?.type === 'application/vnd.ms-excel')"
+        [disabled]="
+          !uploadForm.valid && !(file?.type === 'application/vnd.ms-excel')
+        "
       >
         Upload
       </button>
