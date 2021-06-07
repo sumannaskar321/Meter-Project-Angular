@@ -7,8 +7,10 @@
         class="form-control"
         id="textInput"
         [value]="value"
-        (input)="onType($event)"
+        (click)="onType(myTextInput)"
+        (keyup)="onType(myTextInput)"
         style="border: 1px solid black;"
+        #myTextInput
       />
       <div>
         <div *ngFor="let data of showDataList" (click)="onSelect(data)">
